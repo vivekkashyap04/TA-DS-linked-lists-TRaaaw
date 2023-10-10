@@ -1,6 +1,76 @@
 - Create a class named `Node` that is responsible for storing the value and a reference to the next node.
 - Create another class named `LinkedList` that will manage multiple nodes and will do operations like adding, removing, searching etc. This class will accept one parameter the head(initial) value that will be the first value of the linked list. If the user doesn't pass the first value default to `null`
 
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
+    }
+}
+
+
+class LinkedList {
+    constructor(head = null) {
+        this.head = head !== null ? new Node(head) : null;
+    }
+
+    // Add a new node to the end of the linked list
+    append(value) {
+        const newNode = new Node(value);
+        if (this.head === null) {
+            this.head = newNode;
+            return;
+        }
+
+        let current = this.head;
+        while (current.next !== null) {
+            current = current.next;
+        }
+        current.next = newNode;
+    }
+
+    // Remove a node with the specified value
+    remove(value) {
+        if (this.head === null) return;
+
+        // If the head node holds the value to be deleted
+        if (this.head.value === value) {
+            this.head = this.head.next;
+            return;
+        }
+
+        let current = this.head;
+        while (current.next !== null && current.next.value !== value) {
+            current = current.next;
+        }
+
+        if (current.next === null) return;  // value not found
+        current.next = current.next.next;  // bypass the node to delete it
+    }
+
+    // Search for a value in the linked list
+    search(value) {
+        let current = this.head;
+        while (current !== null) {
+            if (current.value === value) return true;
+            current = current.next;
+        }
+        return false;
+    }
+
+    // Print the linked list
+    print() {
+        let current = this.head;
+        const values = [];
+        while (current !== null) {
+            values.push(current.value);
+            current = current.next;
+        }
+        console.log(values.join(' -> '));
+    }
+}
+
+
 - Make sure to add the following methods in the `LinkedList` class.
 
   - `insertHead`
