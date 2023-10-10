@@ -10,8 +10,80 @@ Using the linked list class you created in the previous exercise implement stack
 **YOU HAVE TO USE LINKED LIST TO STORE DATA**
 
 ```js
+class LinkedList {
+    constructor() {
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+    }
+
+    prepend(value) {
+        const newNode = new Node(value);
+        if (!this.head) {
+            this.head = newNode;
+            this.tail = newNode;
+        } else {
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+        this.length++;
+    }
+
+    deleteFirst() {
+        if (!this.head) return null;
+
+        const valueToReturn = this.head.value;
+        this.head = this.head.next;
+        this.length--;
+
+        if (!this.head) {
+            this.tail = null;
+        }
+
+        return valueToReturn;
+    }
+
+    getFirst() {
+        return this.head ? this.head.value : null;
+    }
+
+    isEmpty() {
+        return this.length === 0;
+    }
+
+    printAll() {
+        let currentNode = this.head;
+        while (currentNode) {
+            console.log(currentNode.value);
+            currentNode = currentNode.next;
+        }
+    }
+}
+
 class Stack {
-  // your code goes here
+    constructor() {
+        this.linkedList = new LinkedList();
+    }
+
+    add(value) {
+        this.linkedList.prepend(value);
+    }
+
+    remove() {
+        return this.linkedList.deleteFirst();
+    }
+
+    peek() {
+        return this.linkedList.getFirst();
+    }
+
+    printAll() {
+        this.linkedList.printAll();
+    }
+
+    isEmpty() {
+        return this.linkedList.isEmpty();
+    }
 }
 
 // Test 1
